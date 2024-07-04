@@ -22,3 +22,17 @@ services:
       - ASPNETCORE_HTTP_PORTS=80
       - ConnectionStrings__CarApiConnection=Server=host.docker.internal,1433;Database=CarDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
       - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
+  
+  cronjobmanager:
+    image: ${DOCKER_REGISTRY-}cronjobmanager
+    build:
+      context: .
+      dockerfile: CronJobManager/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__CronJobManagerDbConnection=Server=host.docker.internal,1433;Database=CronJobManagerDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
+    depends_on:
+      - client
