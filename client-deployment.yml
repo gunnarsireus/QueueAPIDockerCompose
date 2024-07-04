@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: your-docker-repo/client:latest
+        env:
+        - name: ASPNETDbConnection
+          value: "Server=host.docker.internal;Initial Catalog=ASPNETDb;Integrated Security=True;Max Pool Size=100;Encrypt=false"
+        - name: QueueDbConnection
+          value: "Server=host.docker.internal;Initial Catalog=QueueDb;Integrated Security=True;Max Pool Size=100;Encrypt=false"
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: client
