@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Shared.DAL;
 using Shared.Repositories;
+using System;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -27,6 +28,8 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
         CultureInfo.CurrentUICulture = new CultureInfo("en-US");
 
         var builder = WebApplication.CreateBuilder(args);

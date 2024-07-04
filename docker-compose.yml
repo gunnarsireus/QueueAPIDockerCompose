@@ -11,7 +11,9 @@ services:
       - ASPNETCORE_HTTP_PORTS=80
       - ConnectionStrings__ASPNETDbConnection=Server=host.docker.internal,1433;Database=ASPNETDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
       - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
-
+    depends_on:
+      - server
+  
   server:
     image: ${DOCKER_REGISTRY-}server
     build:
@@ -22,12 +24,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=80
       - ConnectionStrings__CarApiConnection=Server=host.docker.internal,1433;Database=CarDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
       - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-      
+  
   cronjobmanager:
     image: ${DOCKER_REGISTRY-}cronjobmanager
     build:
