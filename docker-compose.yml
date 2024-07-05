@@ -1,4 +1,15 @@
 services:
+  server:
+    image: ${DOCKER_REGISTRY-}server
+    build:
+      context: .
+      dockerfile: Server/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - ConnectionStrings__CarApiConnection=Server=host.docker.internal,1433;Database=CarDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
+      - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
+
   client:
     image: ${DOCKER_REGISTRY-}client
     build:
@@ -13,18 +24,7 @@ services:
       - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
     depends_on:
       - server
-  
-  server:
-    image: ${DOCKER_REGISTRY-}server
-    build:
-      context: .
-      dockerfile: Server/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=80
-      - ConnectionStrings__CarApiConnection=Server=host.docker.internal,1433;Database=CarDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
-      - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
-  
+ 
   cronjobmanager:
     image: ${DOCKER_REGISTRY-}cronjobmanager
     build:
