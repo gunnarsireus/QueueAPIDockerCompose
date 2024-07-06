@@ -1,3 +1,4 @@
+using CronJobManager.Filter;
 using CronJobManager.Services.Interfaces;
 using CronJobManager.Services.Models;
 using CronJobManager.Services.Services;
@@ -67,13 +68,16 @@ namespace CronJobManager
 
                         app.UseRequestLocalization(localizationOptions);
 
+                        app.UseHangfireDashboard("/hangfire", new DashboardOptions
+                        {
+                            Authorization = [new AuthorizationFilter()]
+                        });
+
                         app.UseRouting();
-                        app.UseHangfireDashboard(); // Add this line to use the Hangfire Dashboard on localhost:5000/hangfire
 
                         app.UseEndpoints(endpoints =>
                         {
                             endpoints.MapHangfireDashboard();
-                            endpoints.MapControllers();
                         });
                     });
                 });
