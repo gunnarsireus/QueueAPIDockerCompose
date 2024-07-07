@@ -7,7 +7,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
-      - ConnectionStrings__CarApiConnection=Server=host.docker.internal,1433;Database=CarDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
+      - ConnectionStrings__CarApiDbConnection=Server=host.docker.internal,1433;Database=CarDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
       - ConnectionStrings__QueueDbConnection=Server=host.docker.internal,1433;Database=QueueDb;User Id=sa;Password=StrongPassword123;Max Pool Size=100;Encrypt=false
 
   client:
