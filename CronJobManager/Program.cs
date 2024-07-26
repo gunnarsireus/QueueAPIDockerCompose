@@ -13,12 +13,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestSharp;
-using System.Data.SqlClient;
 using System;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Configuration;
 
 namespace CronJobManager
 {
